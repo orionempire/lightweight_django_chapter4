@@ -1,5 +1,7 @@
 #### Original repository
     https://github.com/lightweightdjango/examples
+    U:demo
+    P:demo1234
 
 ### First time pre-steps
 ```text
@@ -24,11 +26,15 @@ pip install -r docker/requirements.txt
 workon django_tutorial_3_7
 mkdir database
 django-admin.py startproject scrum .
+python manage.py startapp board
 #update DATABASE in settings.py 
 d-c up -d --build
 docker ps
-curl http://127.0.0.1:8000/
-d-r python manage.py migrate
+curl http://0.0.0.0:8000/
+d-c stop web
+python manage.py makemigrations board
+python manage.py migrate
+python manage.py createsuperuser
 ```
 
 
