@@ -25,42 +25,29 @@ pip install -r docker/requirements.txt
 ```text
 set project interpreter to lightweight_django_chapter4
 ```
-d-c up -d --build
+
 
 #### Roll out
 ```bash
-workon django_tutorial_3_7
-d-c stop db
+workon lightweight_django_chapter4
 docker rm `docker ps -a|grep lightweightdjangochapter4_db|cut -d' ' -f1` 
 rm -fr ./database
 mkdir database
-d-c up -d db
-docker exec -it `docker ps|grep lightweightdjangochapter4_db|cut -d' ' -f1` bash
 createdb -E UTF-8 scrum -U postgres
-exit
 #update DATABASE in settings.py
-cd scrum/
-python manage.py makemigrations board
-python manage.py migrate
-python manage.py createsuperuser
+d-c up -d --build
+http://127.0.0.1:8000/api/
 ```
 
-http://127.0.0.1:8000/api/
-### Database settings
-```text
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
-    }
-    
-}
+#### Clean up
+```bash
+d-c down
+```
+#### Diagnose
+```bash
+docker exec -it `docker ps|grep lightweightdjangochapter4_db|cut -d' ' -f1` bash
 psql -U postgres
 \l
 \dt
 \q
 ```
-python -c "import sys; print(sys.path)"
